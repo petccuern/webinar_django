@@ -1,0 +1,9 @@
+<form method="POST">
+    
+    {% csrf_token %}
+    {{form.as_p}}
+    {{form.errors}}
+
+    <!-- <button type="submit" value="Cadastrar"></button> -->
+    <input type="submit" class="button" value="Cadastrar">
+</form>
