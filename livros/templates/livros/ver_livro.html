@@ -1,0 +1,32 @@
+<h1>{{livro.titulo}}</h1>
+{{livro.sinopse}} <br>
+{{livro.data_publicacao}} <br>
+
+{% for i in livro.autor.all %}
+    {{i}} <br>
+{% empty %}
+    Não há autores. <br>
+{%endfor%}
+
+Estoque: {{livro.estoque}} <br>
+
+
+{% if request.user.tipo_usuario == 1 %}
+    <br>
+    <a href="{% url 'livros:alugar' livro.id %}">
+        <button>Alugar</button>
+    </a><br>
+
+    <a href="{% url 'livros:devolver' livro.id %}"">
+        <button>Devolver</button>
+    </a><br>
+    Bem vindo {{ request.user }}
+
+{% elif request.user.tipo_usuario == 2%}
+    <br><br>
+    Lista de quem alugou: {{livro.quem_alugou.all}} <br>
+    <a href="{% url 'livros:editar_livros' livro.id %}">
+        <button>Editar</button>
+    </a>
+
+{% endif %}
