@@ -17,7 +17,7 @@ class Livro(models.Model):
     data_publicacao= models.DateField()
     autor= models.ManyToManyField('Autor')
 
-    quem_alugou=models.ManyToManyField('users.User', blank=True, null=True)
+    # quem_alugou=models.ManyToManyField('users.User', blank=True, null=True) Modifiquei e criei uma classe separada para este campo, que seria a forma mais correta.
 
     def __str__(self):
         return self.titulo
@@ -28,4 +28,6 @@ class QuemAlugou(models.Model):
     cliente = models.ForeignKey('users.User', on_delete=CASCADE)
 
     def __str__(self):
-        return self.cliente
+        return str(self.cliente)
+# esta classe pega o titulo do livro e o nome do cliente que alugou de forma unica, assim, o mesmo cliente pode alugar o mesmo livro varias vezes
+# que irá ficar cadastrado todas as vezes no sistema.

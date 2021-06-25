@@ -13,7 +13,8 @@ def lista_livros(request):
 
 def ver_livro(request, id):
     livro=Livro.objects.get(id=id)
-    return render(request, 'livros/ver_livro.html', {'livro':livro})
+    alugou=QuemAlugou.objects.filter(titulo=livro)
+    return render(request, 'livros/ver_livro.html', {'livro':livro, 'alugou':alugou})
 
 
 def cadastrar_livros(request):
@@ -39,18 +40,26 @@ def editar_livros(request, id):
 
 def alugar(request, id):
     livro=Livro.objects.get(id=id)
+    alugou=QuemAlugou() # Criei um objeto do tipo 'QuemAlugou', é semelhante ao formato de cadastr, mas neste caso nao precisa de um formluário, pois dessa forma nós editamos ou criamos atraves da propria view.
+    
     livro.estoque-=1
-    livro.quem_alugou.add(request.user)
+    alugou.titulo=livro
+    alugou.cliente=request.user
+
+    alugou.save()
     livro.save()
     return redirect('livros:lista_livros')
 
 
 def devolver(request, id):
     livro=Livro.objects.get(id=id)
-    if request.user in livro.quem_alugou.all():
-        livro.estoque+=1
-        livro.quem_alugou.remove(request.user)
-        livro.save()
-        return redirect('livros:lista_livros')
-    else:
-        return redirect('livros:lista_livros')
+    alugou=QuemAlugou.objects.filter(cliente=request.user) #aqui estou filtrando todos os objetos da minha classe 'QuemAlugou' pelo nome do cliente.
+    for i in alugou:
+        if livro == i.titulo:
+            livro.estoque+=1
+            i.delete()
+            livro.save()
+            return redirect('livros:lista_livros')
+        else:
+            continue
+    return redirect('livros:lista_livros')

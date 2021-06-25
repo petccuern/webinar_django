@@ -6,6 +6,10 @@ from .models import *
 class LivroAdmin(admin.ModelAdmin):
     list_display=('titulo','sinopse','data_publicacao','id')
 
+
+class QuemAlugouAdmin(admin.ModelAdmin):
+    list_display=('cliente','titulo')
+
 admin.site.register(Livro, LivroAdmin)
 admin.site.register(Autor)
-admin.site.register(QuemAlugou)
+admin.site.register(QuemAlugou, QuemAlugouAdmin)
