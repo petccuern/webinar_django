@@ -1,3 +1,11 @@
+{% extends 'base.html' %}
+
+{%block title%}
+    Lista de Livros
+{%endblock%}
+
+{% block content %}
+
 <h1>Lista de Livros</h1>
 
 {% for i in livro %}
@@ -18,3 +26,14 @@ Bem vindo {{ request.user }}
 </a>
 
 {% endif %}
+
+<br><br>
+<a href="{% url 'users:logout_view' %}">
+    <button>Logout</button>
+</a>
+
+{%endblock%}
+
+<!-- Continua sendo o mesmo código, com a mesma propriedade. O que fiz aqui foi apenas deixar de uma maneira mais "correta" onde eu criei um arquivo em templates chamado
+'base.html' e nele criei blocos, onde posso chamar esses blocos em outros arquivos para reaproveitarem sua estrutura, que é um padrão
+html 5. -->
