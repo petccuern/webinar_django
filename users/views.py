@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import logout
 
 from .forms import *
 from .models import *
 
 # Create your views here.
+app_name='users'
 
 def registro(request):
     form=RegisterForm(request.POST or None)
@@ -13,6 +15,10 @@ def registro(request):
     else:
         return render(request,'users/registro.html', {'form':form})
 
+
+def logout_view(request):
+    logout(request)
+    return redirect ('/accounts/login')
 
 
 
