@@ -1,9 +1,24 @@
-<form method="POST">
-    
-    {% csrf_token %}
-    {{form.as_p}}
-    {{form.errors}}
+{% extends 'base.html' %}
 
-    <!-- <button type="submit" value="Cadastrar"></button> -->
-    <input type="submit" class="button" value="Cadastrar">
-</form>
+{%block title%}
+    Registro
+{%endblock%}
+
+{% block content %}
+
+    <form method="POST">
+        
+        {% csrf_token %}
+        {{form.as_p}}
+        {{form.errors}}
+
+        <!-- <button type="submit" value="Cadastrar"></button> -->
+        <input type="submit" class="button" value="Cadastrar">
+    </form>
+
+{%endblock%}
+
+
+<!-- O formulario é o mesmo. O que fiz aqui foi apenas deixar de uma maneira mais "correta" onde eu criei um arquivo em templates chamado
+'base.html' e nele criei blocos, onde posso chamar esses blocos em outros arquivos para reaproveitarem sua estrutura, que é um padrão
+html 5. -->
